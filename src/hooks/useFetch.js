@@ -1,31 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
+
+import { fetchReducer, initialState } from '../reducers/fetchReducer';
 
 function useFetch(url) {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [state, dispatch] = useReducer(fetchReducer, initialState);
 
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
-
+    dispatch({ type: 'FETCHING_START' });
     const fetchData = async () => {
       try {
-        setIsLoading(true);
         const response = await fetch(url, { signal });
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const result = await response.json();
-        setData(result);
-        setIsLoading(false);
+        dispatch({ type: 'FETCHING_SUCCESS', payload: result });
       } catch (error) {
-        if (error.name === 'AbortError') {
-          setError('Fetch aborted');
-        } else {
-          setError(error);
-        }
-        setIsLoading(false);
+        dispatch({ type: 'FETCHING_FAILURE' });
       }
     };
 
@@ -36,7 +29,7 @@ function useFetch(url) {
     };
   }, [url]);
 
-  return { data, isLoading, error };
+  return state;
 }
 
 export default useFetch;

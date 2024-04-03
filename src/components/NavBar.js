@@ -28,9 +28,7 @@ function NavBar() {
     });
   };
 
-  useEffect(() => {
-    console.log(expandedLinks);
-  }, [expandedLinks]);
+  useEffect(() => {}, [expandedLinks]);
 
   return (
     <>
