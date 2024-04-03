@@ -9,7 +9,7 @@ function Main() {
   return (
     <Routes>
       <Route path='/' element={<Home />} />
-      <Route path='/:course' element={<Details />} />
+      <Route path='/:language' element={<Details />} />
     </Routes>
   );
 }

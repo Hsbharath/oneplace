@@ -11,13 +11,12 @@ function NavBar() {
   const [expandedLinks, setExpandedLinks] = useState({});
 
   const { data, isLoading } = useFetch(
-    'https://hsbharath.github.io/nav-links/data/home-links.json'
+    `https://hsbharath.github.io/nav-links/data/home-links.json`
   );
 
   useEffect(() => {
     if (data) {
       setLinks(data);
-      console.log(data);
     }
   }, [data]);
 
@@ -28,12 +27,10 @@ function NavBar() {
     });
   };
 
-  useEffect(() => {}, [expandedLinks]);
-
   return (
     <>
       <hgroup className='w-full h-[70px] flex items-center justify-start p-4'>
-        <h1 className='text-3xl font-bold'>OnePlace.</h1>
+        <h1 className={`text-3xl font-bold text-black`}>OnePlace.</h1>
       </hgroup>
       <ul className='w-full flex flex-col items-start justify-start'>
         {!isLoading &&
@@ -42,7 +39,9 @@ function NavBar() {
             <li key={link.id} className='w-full text-left px-3'>
               <NavLink
                 to={link.link}
-                onClick={() => toggleSublinks(link.id)}
+                onClick={() => {
+                  toggleSublinks(link.id);
+                }}
                 className='w-full flex items-center justify-between p-2'
               >
                 <span className='text-black text-md font-medium'>
