@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect } from 'react';
 
 import { NavLink } from 'react-router-dom';
 
@@ -6,27 +6,9 @@ import { GoChevronRight, GoChevronDown } from 'react-icons/go';
 
 import useFetch from '../hooks/useFetch';
 
-const initialState = {
-  language: null,
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'LANGUAGE':
-      return {
-        ...state,
-        language: action.payload,
-      };
-    default:
-      return state;
-  }
-};
-
 function NavBar() {
   const [links, setLinks] = useState([]);
   const [expandedLinks, setExpandedLinks] = useState({});
-
-  const [state, dispatch] = useReducer(reducer, initialState);
 
   const { data, isLoading } = useFetch(
     'https://hsbharath.github.io/nav-links/data/home-links.json'
@@ -63,8 +45,6 @@ function NavBar() {
               <NavLink
                 to={link.link}
                 onClick={() => toggleSublinks(link.id)}
-                state={state}
-                dispatch={dispatch}
                 className='w-full flex items-center justify-between p-2'
               >
                 <span className='text-black text-md font-medium'>
